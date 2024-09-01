@@ -61,6 +61,7 @@ export default function Home() {
       ) : settings.useOllama || settings.openaiApiKey ? (
         <ChatList
           apiKey={settings.openaiApiKey}
+          openaiBaseUrl={settings.openaiBaseUrl}
           useOllama={settings.useOllama}
           ollamaUrl={settings.ollamaUrl}
         />

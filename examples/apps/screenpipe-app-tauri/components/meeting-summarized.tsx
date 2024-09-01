@@ -166,7 +166,7 @@ export const MeetingSummarizer = ({ pipe }: { pipe: Pipe }) => {
           : settings.ollamaUrl + "/api";
         const provider = settings.useOllama
           ? createOllama({ baseURL: baseUrl })
-          : createOpenAI({ apiKey: settings.openaiApiKey });
+          : createOpenAI({ apiKey: settings.openaiApiKey, baseURL: settings.openaiBaseUrl });
 
         const { textStream } = await streamText({
           model: provider(settings.aiModel),

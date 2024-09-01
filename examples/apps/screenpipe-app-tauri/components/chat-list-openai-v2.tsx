@@ -29,8 +29,9 @@ import { FunctionCallMessage } from "./function-call-message";
 import { EmptyScreen } from "./empty-screen";
 import { useSettings } from "@/lib/hooks/use-settings";
 import { usePostHog } from "posthog-js/react";
-import * as Sentry from "@sentry/nextjs";
+// import * as Sentry from "@sentry/nextjs";
 import { queryScreenpipeNtimes, screenpipeMultiQuery } from "@/lib/screenpipe";
+import { open } from '@tauri-apps/plugin-shell';
 
 // function to generate a tool call id
 function generateToolCallId() {
@@ -61,10 +62,12 @@ async function generateTextWithRetry(
 
 export function ChatList({
   apiKey,
+  openaiBaseUrl,
   useOllama,
   ollamaUrl,
 }: {
   apiKey: string;
+  openaiBaseUrl: string;
   useOllama: boolean;
   ollamaUrl: string;
 }) {
@@ -100,6 +103,7 @@ export function ChatList({
       const provider = useOllama
         ? createOllama({ baseURL: baseUrl })
         : createOpenAI({
+            baseURL: settings.openaiBaseUrl,
             apiKey: apiKey,
           });
 
@@ -349,7 +353,7 @@ export function ChatList({
         ]);
       }
 
-      Sentry.captureException(error);
+      // Sentry.captureException(error);
     } finally {
       setIsLoading(false);
     }

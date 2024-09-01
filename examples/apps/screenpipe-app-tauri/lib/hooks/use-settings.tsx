@@ -7,6 +7,7 @@ import { Pipe } from "./use-pipes";
 
 const defaultSettings: Settings = {
   openaiApiKey: "",
+  openaiBaseUrl: "https://api.openai.com/v1",
   useOllama: false,
   ollamaUrl: "http://localhost:11434",
   isLoading: true,
@@ -39,6 +40,7 @@ const defaultSettings: Settings = {
 
 export interface Settings {
   openaiApiKey: string;
+  openaiBaseUrl: string;
   useOllama: boolean;
   ollamaUrl: string;
   isLoading: boolean;
@@ -96,6 +98,8 @@ export function useSettings() {
       try {
         await store!.load();
         const savedKey = ((await store!.get("openaiApiKey")) as string) || "";
+        const savedOpenAIUrl = ((await store!.get("openaiBaseUrl")) as string) || "https://api.openai.com/v1";
+
         const savedUseOllama =
           ((await store!.get("useOllama")) as boolean) || false;
         const savedOllamaUrl =
@@ -131,6 +135,7 @@ export function useSettings() {
           ((await store!.get("disableAudio")) as boolean) || false;
         setSettings({
           openaiApiKey: savedKey,
+          openaiBaseUrl: savedOpenAIUrl,
           useOllama: savedUseOllama,
           isLoading: false,
           ollamaUrl: savedOllamaUrl,
